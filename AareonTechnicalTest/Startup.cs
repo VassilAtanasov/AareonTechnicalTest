@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace AareonTechnicalTest
         {
 
             services.AddControllers();
+            services.AddHttpLogging(httpLogging => { httpLogging.LoggingFields = HttpLoggingFields.All; });
             services.AddDbContext<ApplicationContext>(c => c.UseSqlite());
             services.AddSwaggerGen(c =>
             {
