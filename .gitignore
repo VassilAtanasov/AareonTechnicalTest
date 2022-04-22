@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/AareonTechnicalTest/Ticketing.db-shm
+/AareonTechnicalTest/Ticketing.db-wal

@@ -18,6 +18,8 @@ namespace AareonTechnicalTest
 
         public virtual DbSet<Ticket> Tickets { get; set; }
 
+        public virtual DbSet<Note> Notes { get; set; }
+
         public string DatabasePath { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
