@@ -29,7 +29,10 @@ namespace AareonTechnicalTest.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Ticket>> GetTicket(int id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
+            var ticket = await _context.Tickets
+                .Where(_ => _.Id == id)
+                .Include(_ => _.Notes)
+                .FirstOrDefaultAsync();
 
             if (ticket == null)
             {
@@ -42,12 +45,16 @@ namespace AareonTechnicalTest.Controllers
         // PUT: api/Tickets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicket(int id, Ticket ticket)
+        public async Task<IActionResult> PutTicket(int id, DTO.TicketPut request)
         {
-            if (id != ticket.Id)
+            var ticket = _context.Tickets.Find(id);
+
+            if (ticket == null)
             {
                 return BadRequest();
             }
+
+            ticket.Content = request.Content;
 
             _context.Entry(ticket).State = EntityState.Modified;
 
