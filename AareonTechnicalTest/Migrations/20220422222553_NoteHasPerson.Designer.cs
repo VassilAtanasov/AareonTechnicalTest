@@ -2,6 +2,7 @@
 using AareonTechnicalTest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AareonTechnicalTest.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220422222553_NoteHasPerson")]
+    partial class NoteHasPerson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -32,8 +34,6 @@ namespace AareonTechnicalTest.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
 
                     b.HasIndex("TicketId");
 
@@ -79,22 +79,11 @@ namespace AareonTechnicalTest.Migrations
 
             modelBuilder.Entity("AareonTechnicalTest.Models.Note", b =>
                 {
-                    b.HasOne("AareonTechnicalTest.Models.Person", null)
-                        .WithMany("Notes")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AareonTechnicalTest.Models.Ticket", null)
                         .WithMany("Notes")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AareonTechnicalTest.Models.Person", b =>
-                {
-                    b.Navigation("Notes");
                 });
 
             modelBuilder.Entity("AareonTechnicalTest.Models.Ticket", b =>

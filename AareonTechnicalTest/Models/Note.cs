@@ -6,7 +6,7 @@
 
         public string Text { get; set; }
 
-        public Ticket Ticket { get; set; }
+        public int PersonId { get; set; }
 
         public int TicketId { get; set; }
     }
