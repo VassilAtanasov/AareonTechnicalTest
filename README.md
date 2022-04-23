@@ -27,4 +27,5 @@ Tools used in the development include:
 - Visual Studio Code
 - Postman
 - Github
+- CI/CD with Github Actions
 - Swagger
