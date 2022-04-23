@@ -1,5 +1,7 @@
+using AareonTechnicalTest.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,11 +24,13 @@ namespace AareonTechnicalTest
         {
 
             services.AddControllers();
+            services.AddHttpLogging(httpLogging => { httpLogging.LoggingFields = HttpLoggingFields.All; });
             services.AddDbContext<ApplicationContext>(c => c.UseSqlite());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AareonTechnicalTest", Version = "v1" });
             });
+            services.AddScoped<IPermissionService, PermissionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
