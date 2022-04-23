@@ -1,3 +1,4 @@
+using AareonTechnicalTest.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpLogging;
@@ -29,6 +30,7 @@ namespace AareonTechnicalTest
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AareonTechnicalTest", Version = "v1" });
             });
+            services.AddScoped<IPermissionService, PermissionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

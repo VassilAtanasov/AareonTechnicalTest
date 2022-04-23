@@ -1,12 +1,10 @@
-﻿using System;
+﻿using AareonTechnicalTest.Models;
+using AareonTechnicalTest.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AareonTechnicalTest;
-using AareonTechnicalTest.Models;
 
 namespace AareonTechnicalTest.Controllers
 {
@@ -15,10 +13,12 @@ namespace AareonTechnicalTest.Controllers
     public class NotesController : ControllerBase
     {
         private readonly ApplicationContext _context;
+        private readonly IPermissionService permissionService;
 
-        public NotesController(ApplicationContext context)
+        public NotesController(ApplicationContext context, IPermissionService permissionService)
         {
             _context = context;
+            this.permissionService = permissionService;
         }
 
         // GET: api/Notes
@@ -92,6 +92,17 @@ namespace AareonTechnicalTest.Controllers
             if (note == null)
             {
                 return NotFound();
+            }
+
+            var person = await _context.Persons.FindAsync(note.PersonId);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            if (permissionService.DeleteNotesNotAllowed(person))
+            {
+                return Forbid();
             }
 
             _context.Notes.Remove(note);
