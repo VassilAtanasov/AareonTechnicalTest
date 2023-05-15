@@ -1,5 +1,5 @@
 # Aareon Technical Test - Ticketing System
-
+technical task
 
 ## Requirements
 
